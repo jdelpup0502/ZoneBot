@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+
+# ChromaDB
+data/chroma_db/
+
+# Data and logs
+data/*.pdf
+data/*.csv
+*.log
+
+# IDEs
+.vscode/
+.idea/

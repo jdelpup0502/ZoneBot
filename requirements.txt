@@ -1,2 +1,9 @@
-# Project dependencies will be listed here
-pytz
+# Core dependencies
+pypdf
+beautifulsoup4
+chromadb
+langchain
+openai
+python-dotenv
+pandas
+requests
