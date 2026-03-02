@@ -13,3 +13,7 @@ opencv-python
 numpy
 pdf2image
 Pillow
+
+# Testing
+pytest
+pytesseract
