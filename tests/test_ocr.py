@@ -38,3 +38,23 @@ class TestTextExtractor(unittest.TestCase):
             
             self.assertEqual(len(dimensions), 1)
             self.assertIn("10'6\" x 12'0\"", dimensions)
+
+    def test_extract_text_no_detection(self):
+        """Test extract_text when no text is detected."""
+        with patch('src.ocr.pytesseract') as mock_pytesseract:
+            mock_pytesseract.image_to_string.return_value = ""
+            
+            text = self.extractor.extract_text(self.dummy_image)
+            
+            self.assertEqual(text, "")
+            mock_pytesseract.image_to_string.assert_called_once()
+
+    def test_extract_dimensions_no_detection(self):
+        """Test extract_dimensions when no dimensions are detected."""
+        with patch('src.ocr.pytesseract') as mock_pytesseract:
+            mock_pytesseract.image_to_string.return_value = "No dimensions here."
+            
+            dimensions = self.extractor.extract_dimensions(self.dummy_image)
+            
+            self.assertEqual(len(dimensions), 0)
+            self.assertEqual(dimensions, [])

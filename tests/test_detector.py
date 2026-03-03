@@ -63,3 +63,22 @@ class TestZoneDetector(unittest.TestCase):
         
         self.assertEqual(result.shape, color_image.shape)
         self.assertFalse(np.array_equal(result, color_image)) # Should be different due to drawing
+
+    def test_detect_multiple_zones(self):
+        """Test detecting multiple distinct zones."""
+        detector = ZoneDetector(min_area=1000)
+        
+        image = np.full((600, 600), 0, dtype=np.uint8)
+        # First rectangle
+        cv2.rectangle(image, (50, 50), (150, 150), 255, -1) # Area = 100x100 = 10000
+        # Second rectangle
+        cv2.rectangle(image, (200, 200), (350, 350), 255, -1) # Area = 150x150 = 22500
+        # Third rectangle, too small
+        cv2.rectangle(image, (400, 400), (420, 420), 255, -1) # Area = 20x20 = 400
+        
+        zones = detector.detect_zones(image)
+        
+        self.assertEqual(len(zones), 2) # Expecting 2 zones, as one is too small
+
+        areas = sorted([cv2.contourArea(z) for z in zones])
+        self.assertEqual(areas, [10000, 22500])
