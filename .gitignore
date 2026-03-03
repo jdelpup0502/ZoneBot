@@ -17,3 +17,6 @@ data/*.csv
 # IDEs
 .vscode/
 .idea/
+
+requirements.txt
+requirements_core.txt
